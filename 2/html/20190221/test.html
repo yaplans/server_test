@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv="Cache-Control" content="no-cache">
+  <meta charset="utf-8">
+  <title>jQuery.post demo</title>
+<!--
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+-->
+  <script type="text/javascript" src="./bootstrap/js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+ 
+<form action="/test.html" id="searchForm">
+  <input type="text" id="content" name="s" placeholder="Search...">
+  <input type="submit" value="Search">
+</form>
+<!-- the result of the search will be rendered inside this div -->
+<div id="result"></div>
+ 
+<script>
+	console.log("1");
+// Attach a submit handler to the form
+$( "#searchForm" ).submit(function( event ) {
+ console.log("Pushed1");
+ alert("Pushed!");
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    term = $form.find( "input[name='s']" ).val(),
+    url = $form.attr( "action" );
+    
+    console.log(url);
+    console.log(term);
+    
+    
+ 	console.log($form);
+ 
+  // Send the data using post
+  var posting = $.post( url, { s: term } );
+ console.log(posting);
+  // Put the results in a div
+  posting.done(function( data ) {
+	  console.log(data);
+    //~ var content = $( data ).find( "#content" );
+    var content = $( data ).find( "#content" );
+    console.log(content);
+    //~ content = "555";
+    $( "#result" ).empty().append( content );
+  });
+});
+</script>
+ 
+</body>
+</html>
