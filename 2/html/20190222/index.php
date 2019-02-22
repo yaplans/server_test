@@ -13,9 +13,7 @@ Template ya
     
     <script type="text/javascript" src="./bootstrap/js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css">
-<!--
     <link rel="stylesheet" type="text/css" href="style.css">
--->
     
     <script type="text/javascript" src="script.js"></script>
   </head>
