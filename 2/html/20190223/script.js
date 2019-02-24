@@ -16,7 +16,7 @@ function get_session(p){
 		data: {p: p},
 		success: function(d){
 			//~ alert(data);
-			console.log(d);
+			//~ console.log(d);
 			return d;
 		}
 	});
@@ -63,31 +63,19 @@ function m_get_file(f){
 function m_get_var(){
 
 //~ Должны быть заданы переменные
-//~ Возможно еще понадобятся переменные
+//~ file по маске XXXX_YYYY.gid,
+//~ где XXXX - id1, YYYY - id2
+//~ me, значение 1 или 2 (типа ты какой игрок)
 
 var me = get_session("me");
-var he = get_session("he");
+console.log(me);
+//~ var l_file = m_find_file();
 
-//~ console.log(me);
-//~ console.log(he);
-return {me: me, he: he};	
-}
 
-/**
- * Выдаст id
- * */
-function l_get_id(){
-	var ss = Date.now()/1000 | 0;
-	//~ console.log(typeof(ss));
-	//~ console.log("ss=" + ss);
-	//~ ?? чисоа не совпадают ??
-	var t = ss/10008;
-	//~ console.log(t);
-	var t = t | 0;
-	//~ console.log(t);
-	t = (ss /10008 - t) * 10000 | 0;
-	//~ console.log(t);
-	return t;
+учти где файл ищется...
+var m_file="../index.php";
+m_get_file(m_file);
+	
 }
 
 /**
@@ -99,25 +87,10 @@ function start(){
 	//~ var v=get_session("first");
 	//~ console.log(v);
 	
-	var m_vars = m_get_var();
-	console.log(m_vars.me);
-
-console.log("1");
-
-	if(m_vars.me == undefined){
-console.log("2");		
-		m_vars.me = l_get_id();
-		console.log(m_vars.me);
-		
-		set_session("me", m_vars.me);
-	}
-console.log("3");	
-	var xx = document.getElementById("m_me");
-	xx.innerHTML=m_v	ars.me;
-	//~ value=m_v	ars.me;
+	m_get_var();
 	
 	
-
+	
 	//~ alert("start script!");
 	//~ var j_var= document.getElementById("m_move").value;
 	

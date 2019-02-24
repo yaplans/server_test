@@ -1,0 +1,131 @@
+<?php
+session_start();
+a_my=$_SESSION['a_my'];//Моя таблица
+a_hi=$_SESSION['a_hi'];//Его таблица
+m_pl=$_SESSION['m_pl'];//Номер игрока
+
+?>
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Игра</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+<!--        
+        <style>
+            .m_inline {
+                display: inline-block;
+            }
+        </style>
+-->        
+    </head>
+    <body>
+        <div>
+			<p>Расставь флот:</p>
+			<p>Кликай на своем поле, расставляя флот. Когда будешь готов, нажми кнопку "Играть".</p>
+			<p>Флот состоил из 1 - 4-х палубного, 2 - 3-х палубных, 3 - 2-х палубных, 4 - 1-х палубных.</p>
+        </div>
+<!--
+        <canvas id="my_map" width="200" height="200"></canvas>
+        <canvas id="his_map" width="200" height="200"></canvas>
+-->        
+<!--
+<div class="m_inline">
+        <div class="m_set">
+            <table id="id4" class="m_inline">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="m_inline">
+                <p>- 1</p>
+            </div>
+        </div>
+
+        <div class="m_set">
+            <table id="id3" class="m_inline">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="m_inline">
+                <p>- 2</p>
+            </div>
+        </div>
+
+
+        <div class="m_set">
+            <table id="id2" class="m_inline">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="m_inline">
+                <p>- 3</p>
+            </div>
+        </div>
+
+        <div class="m_set">
+            <table id="id1" class="m_inline">
+                <tbody>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="m_inline">
+                <div class="m_block">
+                <p>- 4</p>
+                </div>
+            </div>
+        </div>
+border="1"
+</div>
+-->
+<div class="m_inline">
+<!--
+    <p id="m_player">Есть противник</p>
+-->
+    <p id="m_player">Противника, пока, нет.</p>
+    <p id="m_out">Здесь сообщения</p>
+</div>
+<div>
+	<input id="b_play" class="btn btn-danger" type="button" onclick="play();" value="Играть"/>
+</div>
+
+        <div class="m_inline">
+            <table id="my_tab" class="m_chess unselectable"  border="1">
+
+            </table>
+        </div>
+        <div class="m_inline">
+            <table id="his_tab" class="m_chess unselectable" border="1">
+            
+            </table>
+        </div>
+        
+        <div id="m_text"></div>
+
+        <script type="text/javascript" src="js/game.js"></script>
+    </body>
+</html>
