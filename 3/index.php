@@ -28,6 +28,10 @@ Template ya
 	  <h3>Hi</h3>
 	  <p id="m_me"></p>
 	  <p id="m_he"></p>
+	  
+	  
+	  
+	  
 <?php 
 	require_once "body.php";
 ?>

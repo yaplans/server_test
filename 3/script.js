@@ -109,31 +109,56 @@ function m_log(x){
 	}
 }
 
-function get_sess(f){
-	var v = document.getElementById("ses");
-	m_log("==get_sess");
-	m_log(v.value);
-	m_log(typeof v.value);
-	return v;
-}
+//~ function get_sess(f){
+	//~ var v = document.getElementById("ses");
+	//~ m_log("==get_sess");
+	//~ m_log(v.value);
+	//~ m_log(typeof v.value);
+	//~ return v;
+//~ }
 
 /**
  * Получим переменную сессии
  * */
 function get_session(f){
 	//~ console.log(p);
-	$.ajax({
+	
+	//~ Тут асинхронность неуместна!
+	//~ $.ajax({
 		//~ async: false,
-		url: "api/api.php",
-		method: "POST",
-		data: {f: f, fun: "j_get_session"},
-		success: function(d){
+		//~ url: "api/api.php",
+		//~ method: "POST",
+		//~ data: {f: f, fun: "j_get_session"},
+		//~ success: function(d){
 			//~ alert(data);
-			m_log("==get_session= "+f);
-			m_log(d);
-			return d;
+			//~ m_log("==get_session= "+f);
+			//~ m_log(d);
+			//~ return d;
+		//~ }
+	//~ });
+	
+	//~ var arr = ["Яблоко", "Апельсин", "Груша"];
+
+//~ arr.forEach(function(item, i, arr) {
+  //~ alert( i + ": " + item + " (массив:" + arr + ")" );
+//~ });
+	
+	
+	var list = document.getElementsByClassName("ses");
+	//~ Так не работает!!!
+	//~ list.forEach(function(item, i, list){
+		//~ if(item.name==f){
+			//~ return item.value;
+		//~ }
+	//~ });
+	var i;
+	console.log(list.length);
+	for (i = 0; i < list.length; i++) {
+		if(list[i].name==f){
+			return list[i].value;
 		}
-	});
+	}
+	//~ return false;	
 }
 
 
@@ -142,6 +167,9 @@ function get_session(f){
  * Установим переменную сессии
  * */
 function set_session(f,t){
+	
+!!!Доделай!!!	
+	
 	$.ajax({
 		url: "api/set_session.php",
 		method: "POST",
@@ -151,8 +179,28 @@ function set_session(f,t){
 			m_log(d);
 		}
 	});
-	m_log("11");
 }
+
+function set_session_sync(f,t){
+	var list = document.getElementsByClassName("ses");
+	var i;
+	for (i = 0; i < list.length; i++) {
+		if(list[i].name==f){
+			list[i].value=t;
+			return true;
+		}
+	}
+	//~ если элемента нет - добавим
+	var new_el = document.createElement("input");
+	new_el.type="hidden";
+	new_el.class="ses";
+	new_el.name=f;
+	new_el.value=t;
+	list[0].appendChild(new_el);
+	m_log("11");
+	//~ return false;
+}
+
 
 /**
  * Найдем файл
@@ -221,21 +269,6 @@ function start(){
 //~ Получаем переменные	
 	var m_vars = m_get_var();
 	m_log(m_vars.me);
-var mmm = get_sess(1);
-	m_log("==get_sess");
-	
-	m_log(mmm);
-	//~ m_log(mmm.join(";"));
-
-	for (key in mmm) {
-			m_log(key);
-			m_log(mmm[key]);
-	}
-	
-
-	alert(Object.keys(mmm));
-
-//~ Object.keys(mmm)
 
 	if(m_vars.me == undefined){//Если id отсутствует
 		m_vars.me = l_get_id();//получим
