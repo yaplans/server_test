@@ -1,3 +1,4 @@
+var ff;
 /**
  * Ждем готовности документа.
  * */
@@ -14,22 +15,62 @@ function main(){
  * Пишем в файл
  * */
 function l_file_write(f,t){
+	m_log("l_file_write f=");
+	m_log(f);
 	$.ajax({
 		url: "api/api.php",
 		type: "POST",
 		dataType: "text",
-		data: {f: f, fun: "l_file_write", t: t},
+		data: {f: f, fun: "j_file_write", t: t},
 		success: function (data){
 			m_log("==l_file_write");
 			m_log(data);
 			return data;
 		},
 		error: function (e){
+			m_log("==l_file_write");
 			m_log(e);
 			return "error";
 		}
 	});	
 	m_log("61");
+}
+
+function to_l_file_wait(){
+	m_log("++==  to_l_file_wait");
+	m_log("++==global vars");
+	m_log(ff);
+	$.ajax({
+		url: "api/api.php",
+		type: "POST",
+		dataType: "text",
+		data: {f: ff, fun: "j_file_exists"},
+		success: function (data){
+			m_log("++==l_file_wait===----");
+			m_log(data);
+			if(data){
+				l_file_read(f);
+			}else{
+				setTimeout(to_l_file_wait, 500);	
+			}
+			//~ return l_file_read(f);
+		},
+		error: function (e){
+			m_log(e);
+			return "error";
+			//~ var m_time=500;
+			
+		}
+	});	
+}
+
+/**
+ * Ждем файл и читаем его
+ * */
+function l_file_wait(f){
+	ff = f;
+	to_l_file_wait();
+	m_log("==l_file_wait");
 }
 
 /**
@@ -167,11 +208,9 @@ function get_session(f){
  * Установим переменную сессии
  * */
 function set_session(f,t){
-	
-!!!Доделай!!!	
-	
+	//~ Добавит переменную в массив $_SESSION
 	$.ajax({
-		url: "api/set_session.php",
+		url: "api/api.php",
 		method: "POST",
 		data: {f: f, t: t, fun: "j_set_session"},
 		success: function(d){
@@ -179,6 +218,7 @@ function set_session(f,t){
 			m_log(d);
 		}
 	});
+	set_session_sync(f,t);
 }
 
 function set_session_sync(f,t){
@@ -199,6 +239,7 @@ function set_session_sync(f,t){
 	list[0].appendChild(new_el);
 	m_log("11");
 	//~ return false;
+	return true;
 }
 
 
@@ -226,23 +267,16 @@ function m_get_var(){
 
 //~ Должны быть заданы переменные
 //~ Возможно еще понадобятся переменные
+	var me = get_session("me"); // my id
+	var he = get_session("he"); // his id
 
-m_log("-1");
-var me = get_session("me"); // my id
-m_log("-2");
-var he = get_session("he"); // his id
-m_log("me=");
-m_log(me);
-m_log("he=");
-m_log(he);
-
-var a = {
-	me: me, 
-	he: he
-};
-m_log("a=");
-m_log(a);
-return a;	
+	var a = {
+		me: me, 
+		he: he
+	};
+	m_log("a=");
+	m_log(a);
+	return a;	
 }
 
 /**
@@ -269,46 +303,42 @@ function start(){
 //~ Получаем переменные	
 	var m_vars = m_get_var();
 	m_log(m_vars.me);
-
+	m_log("Тест me");
 	if(m_vars.me == undefined){//Если id отсутствует
+		m_log("Отсутствует me");
 		m_vars.me = l_get_id();//получим
 		m_log(m_vars.me);
-		m_log("1");
+		m_log("Сохраним me");
 		set_session("me", m_vars.me);//сохраним в сессию
-		m_log("111");
-		//~ Проверим файл 0000.gid
-		m_log("2");
+		m_log("Проверим файл 0000.gid");
 		if(l_file_exists("0000.gid")){
-			m_log("222");
-			
-			m_log("3");
+			m_log("файл 0000.gid есть");
 			var he = l_file_read("0000.gid");
-			m_log("333");
+			m_log("файл 0000.gid прочли");
 			
-			m_log("4");
+			m_log("Сохраним he");
 			set_session("he", he);//сохраним в сессию
-			m_log("444");
 			m_vars.he = he;
 			
-			m_log("5");
-			l_file_write(m_vars.he+".gid",m_vars.me);
-			m_log("555");
+			m_log("Напишем в файл m_vars.he+.gid");
+			//~ l_file_write(m_vars.he+".gid",m_vars.me);
+			l_file_write(he+".gid",m_vars.me);
 			m_log("Ты - ВТОРОЙ");
 		} else {
-			m_log("6");
+			m_log("Напишем в файлд 0000.gid");
 			l_file_write("0000.gid",m_vars.me);
-			m_log("611");
-			
-			m_log("7");
-			l_file_read(m_vars.me+".gid");
-			m_log("777");
-			//~ l_file_get_he(m_vars.me+".gid");
+//~ !!! здесь стопорнулся
+			m_log("Выставим ожидание файла m_vars.me+.gid");
+			m_log("Получив сохраним id противника и начнем игру");
+			//~ l_file_read(m_vars.me+".gid");
+			l_file_wait(m_vars.me+".gid");
 			m_log("Ты - ПЕРВЫЙ");
 		}
 	}
 	
 m_log("8");		
 	//основной цикл
+	m_log("основной цикл");
 	main();
 
 	//~ var xx = document.getElementById("m_me");

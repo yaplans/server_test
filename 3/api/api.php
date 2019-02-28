@@ -23,9 +23,9 @@ function j_file_read($f){
 /**
  * Пишем файл
  * */
-function l_file_write($f, $t){
+function j_file_write($f, $t) {
 	$h = fopen($f,"w");
-	$x = fwrite($h, $t);//Количество записанных файлов
+	$x = fwrite($h, $t);//Количество записанных байт
 	fclose($h);
 	return $x;
 }
@@ -48,12 +48,17 @@ case "j_file_read":
 	echo j_file_read($f);
 	break;
 
+case "j_file_write":
+	echo j_file_write($f,$t);
+	break;
+
 case "j_get_session":
 	echo $_SESSION[$f];
 	break;
 
 case "j_set_session":
 	$_SESSION[$f]=$t;
+	//sess
 	echo $_SESSION[$f];
 	break;
 
